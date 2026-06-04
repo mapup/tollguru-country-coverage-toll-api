@@ -34,6 +34,10 @@ jobs:
           GH_REF_NAME: ${{ github.ref_name }}
           GH_REPO_NAME: ${{ github.event.repository.name }}
         run: |
+          if [ -z "${SAST_GITLEAK_WEBHOOK_URL}" ]; then
+            echo "SAST_GITLEAK_WEBHOOK_URL not configured, skipping webhook"
+            exit 0
+          fi
           BRANCH="${GH_HEAD_REF:-${GH_REF_NAME}}"
           curl -X POST "${SAST_GITLEAK_WEBHOOK_URL}?branch=${BRANCH}&repo=${GH_REPO_NAME}" \
             -H "Content-Type: application/json" \
