@@ -6,6 +6,10 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # Wait 7 days before proposing newly published versions — freshly released
+    # packages can be malicious or unstable.
+    cooldown:
+      default-days: 7
     groups:
       github-actions:
         patterns:
